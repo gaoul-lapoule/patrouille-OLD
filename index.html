@@ -1,0 +1,94 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="utf-8">
+        <title>SIGNALES - ESAM</title>
+        <link href="style.css" rel="stylesheet">
+        <link rel="icon" type="image/png" href="src/logo.png" />
+        <script type="text/javascript" src="script.js"></script>
+
+        <!-- SDK web Géoplateforme-->
+        <script src="GpSDK-2D-3.5.4/GpSDK2D.js"></script>
+        <link rel="stylesheet" href="GpSDK-2D-3.5.4/GpSDK2D.css" />
+    </head>
+
+
+    <body>
+        <header>
+            <img src="src/logo.png" style="height: 40px; padding-top: 5px"> 
+            <h1 class="titreh" style="padding-top: 5px; padding-left: 15px">ESAM | SIGNALES</h1>
+        </header>
+        <div class="conteneur">
+            <!--Boites-->
+            <div class="box" id="sidebar">
+                <!--Bloc outils-->
+                <nav>
+                    <!--Boutton de nav-->
+                    <button class="toggle-btn" data-target="formu"><img src="src/new.png" style="height: 30px;padding-top: 10px;"></button>
+                    <button class="toggle-btn" data-target="chat"><img src="src/chat.png" style="height: 30px;padding-top: 10px;"></button>
+                    <button class="toggle-btn" data-target="save"><img src="src/save.png" style="height: 30px;padding-top: 10px;"></button>
+                </nav>
+                <div id="formu" style="display: none;">
+                    <form method="get" action="">
+                        <h2 style="text-align: center;">PRISE D'ALERTE</h2>
+                        <br>
+                        <br>
+                        <p id="info">
+                            <label for="date">DATE</label>
+                            <input type="date" name="DATE" id="DATE">
+                            <label for="HEURE">HEURE</label>
+                            <input type="time" name="HEURE" id="HEURE">
+                            <label for="PLANTON">PLANTON</label>
+                            <input type="text" name="PLANTON" id="PLANTON">
+                        </p>
+                        <br>
+                        <div id="b1">
+                            <div id="b11">
+                                <h2>APPELANT</h2>
+                                <p id="appelant">
+                                    <label for="nom">NOM</label>
+                                    <input type="text" name="NOM" id="NOM"><br>
+                                    <label for="PRÉNOM">PRÉNOM</label>
+                                    <input type="text" name="PRÉNOM" id="PRÉNOM"><br>
+                                    <label for="TÉLÉPHONE">TÉLÉPHONE</label>
+                                    <input type="tel" name="TÉLÉPHONE" id="TÉLÉPHONE"><br>
+                                    <label for="QUALITÉE">QUALITÉE</label>
+                                    <select name="Chosir">
+                                                <option value="Proprietaire">Propriétaire</option>
+                                                <option value="Témoins">Témoins</option>
+                                                <option value="Institution">Institution</option>
+                                    </select><br>
+                                </p>
+                            </div>
+                            <div id="b12">
+                                <h2>ANIMAL</h2>
+                                <p id="appelant">
+                                    <label for="type">TYPE</label>
+                                    <input type="text" name="TYPE" id="TYPE"><br>
+
+                                    <label for="RACE">RACE</label>
+                                    <input type="text" name="RACE" id="RACE" ><br>
+
+                                    <label for="POIDS">POIDS</label>
+                                    <input type="number" name="POIDS" id="POIDS"><br>
+
+                                    <label for="COMPORTEMENT">COMPORTEMENT</label>
+                                    <input type="text" name="COMPORTEMENT" id="COMPORTEMENT">
+                                </p>
+                            </div>
+                        </div>
+                        <button type="button" onclick="envoyerMessage()">Envoyer</button>
+                    </form>
+                </div>
+                <div id="save" style="display: none;"></div>
+
+
+            </div>
+
+            <div class="box" id="divMap"> 
+            <script src="map.js"></script>
+            </div>
+        </div>
+    </body>
+</html>
+
