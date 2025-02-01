@@ -68,7 +68,7 @@ button {
     flex-wrap: wrap;
 }
 
-input, select{
+#formu input, #formu select{
     max-width: 125px;
     min-width: 50px;
 }
