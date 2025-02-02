@@ -2,7 +2,7 @@
 <html lang="fr">
     <head>
         <meta charset="utf-8">
-        <title>Pat'rouille - ESAM</title>
+        <title>Pat'Rouille - ESAM</title>
         <link href="style.css" rel="stylesheet">
         <link rel="icon" type="image/png" href="src/logo.png" />
         <script type="text/javascript" src="script.js"></script>
@@ -16,7 +16,7 @@
     <body>
         <header>
             <img src="src/logo.png" style="height: 40px; padding-top: 5px"> 
-            <h1 class="titreh" style="padding-top: 5px; padding-left: 15px">ESAM | Pat'rouille | ALPHA</h1>
+            <h1 class="titreh" style="padding-top: 5px; padding-left: 15px">ESAM | Pat'Rouille | Beta 1.0</h1>
         </header>
         <div class="conteneur">
             <!--Boites-->
@@ -29,15 +29,17 @@
                     <button class="toggle-btn" data-target="save"><img src="src/save.png" style="height: 30px;padding-top: 10px;"></button>
                 </nav>
                 <div id="formu" style="display: none;">
-                    <form method="get" action="">
+                    <form method="get" action="" id="formuprisealerte">
                         <h2 style="text-align: center;">PRISE D'ALERTE</h2>
                         <br>
                         <br>
                         <p id="info">
                             <label for="date">DATE</label>
                             <input type="date" name="DATE" id="DATE">
+
                             <label for="HEURE">HEURE</label>
                             <input type="time" name="HEURE" id="HEURE">
+
                             <label for="PLANTON">PLANTON</label>
                             <input type="text" name="PLANTON" id="PLANTON">
                         </p>
@@ -77,6 +79,61 @@
                                 </p>
                             </div>
                         </div>
+                        <br>
+                        <h2 style="text-align: center;">LIEUX</h2>
+                        <p id="lieux">
+                            <label for="departement">DEPARTEMENT</label>
+                            <input type="text" id="departement" placeholder="Saisir un département" list="departements" onchange="loadCommunes()"><br>
+                            <datalist id="departements"></datalist>
+
+                            <label for="commune">COMMUNE</label>
+                            <input type="text" id="commune" placeholder="Saisir une commune" list="communes"><br>
+                            <datalist id="communes"></datalist>
+                            
+                            <br>
+                            <label for="latitude">Latitude :</label>
+                            <input type="number" id="latitude" placeholder="Entrez la latitude" required />
+                            <label for="longitude">Longitude :</label>
+                            <input type="number" id="longitude" placeholder="Entrez la longitude" required />
+                            <button type="button"  onclick="coordcenter()" style="border-width: thin;border-style: solid;"><img src="src/pin.png" style="height: 10px;"></button><br>
+
+                        </p>
+                        <br>
+                        <h2 style="text-align: center;">DESCRIPTION</h2>
+                        <p id="description">
+                            <textarea name="situation" id="situation" style="width: 100%; min-height: 150px;"></textarea><br>
+
+                            <label for="blessure">BLESSURE</label>
+                            <textarea type="text" id="blessure" style="width:75%;"></textarea><br>
+
+                            <label for="DEPUIS">DEPUIS</label>
+                            <textarea type="text" id="depuis" style="width:81%;"></textarea><br>
+                        </p>
+                        <br>
+                        <h2 style="text-align: center;">ACCÉS</h2>
+                        <p id="acces">
+                            
+                            <label for="piste">PISTE PICK-UP</label>
+                            <textarea type="text" id="piste" style="width:100%;"></textarea><br>
+
+                            <label for="temps">TEMPS DE MARCHE</label>
+                            <input type="time" name="temps" id="temps"><br>
+
+                            <label for="aide">AIDE LOGISTIQUE</label>
+                            <textarea type="text" id="aide" style="width:100%;"></textarea><br>
+
+                            <br>
+                            <label for="autres">AUTRES</label>
+                            <textarea name="autres" id="autres" style="width: 100%; min-height: 150px;"></textarea><br>
+                        </p>
+                        <br>
+                        <h2 style="text-align: center;">COMMENTAIRES</h2>
+                        <p id="commentaires">
+                            <textarea name="commentaires" id="com" style="width: 100%; min-height: 150px;"></textarea><br>
+                        </p>
+                        <br>
+                        <br>
+                        <br>
                         <button type="button" onclick="envoyerMessage()">Envoyer</button>
                     </form>
                 </div>
@@ -91,3 +148,4 @@
         </div>
     </body>
 </html>
+
