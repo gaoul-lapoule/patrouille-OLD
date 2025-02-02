@@ -48,6 +48,7 @@ function envoyerMessage() {
     message += ` Animal : ${type} - ${race}%0A`;
     message += ` Poids : ${poids} kg%0A`;
     message += ` Comportement : ${comportement}%0A`;
+    message += ` Envoyé avec Pat'rouille%0A`;
 
     // Générer le lien Messenger
     let messengerUrl = `https://www.messenger.com/t/4257757770900949?text=${message}`;
