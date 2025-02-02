@@ -83,12 +83,12 @@ function envoyerMessage() {
     message += ` Commentaires :%0A`;
     message += ` ${com}%0A%0A`;    
 
-    message += ` Pat'rouille | Beta 1.0`;
+    message += ` Pat'rouille | Beta 1.1`;
     
 
 
     // Générer le lien Messenger
-    let messengerUrl = `https://www.messenger.com/t/4257757770900949?text=${message}`;
+    let messengerUrl = `https://www.messenger.com/e2ee/t/25540215708903119?text=${message}`;
 
     // Ouvrir Messenger dans un nouvel onglet
     window.open(messengerUrl, "_blank");
@@ -144,3 +144,129 @@ function loadCommunes() {
         datalist.innerHTML = "";
     }
 }
+
+    function download() {
+        // Récupérer les valeurs du formulaire
+        var date = document.getElementById("DATE").value;
+        var heure = document.getElementById("HEURE").value;
+        var planton = document.getElementById("PLANTON").value;
+        var nom = document.getElementById("NOM").value;
+        var prenom = document.getElementById("PRÉNOM").value;
+        var telephone = document.getElementById("TÉLÉPHONE").value;
+        var qualite = document.querySelector('select[name="Chosir"]').value;
+        var type = document.getElementById("TYPE").value;
+        var race = document.getElementById("RACE").value;
+        var poids = document.getElementById("POIDS").value;
+        var comportement = document.getElementById("COMPORTEMENT").value;
+        var departement = document.getElementById("departement").value;
+        var commune = document.getElementById("commune").value;
+        var latitude = document.getElementById("latitude").value;
+        var longitude = document.getElementById("longitude").value;
+        var situation = document.getElementById("situation").value;
+        var blessure = document.getElementById("blessure").value;
+        var depuis = document.getElementById("depuis").value;
+        var piste = document.getElementById("piste").value;
+        var temps = document.getElementById("temps").value;
+        var aide = document.getElementById("aide").value;
+        var autres = document.getElementById("autres").value;
+        var commentaires = document.getElementById("com").value;
+
+        // Créer une chaîne de texte avec toutes les informations
+var content = `PRISE D'ALERTE
+DATE: ${date}
+HEURE: ${heure}
+PLANTON: ${planton}
+APPELANT
+NOM: ${nom}
+PRÉNOM: ${prenom}
+TÉLÉPHONE: ${telephone}
+QUALITÉ: ${qualite}
+ANIMAL
+TYPE: ${type}
+RACE: ${race}
+POIDS: ${poids}
+COMPORTEMENT: ${comportement}
+LIEUX
+departement: ${departement}
+commune: ${commune}
+latitude: ${latitude}
+longitude: ${longitude}
+DESCRIPTION
+situation: ${situation}
+blessure: ${blessure}
+depuis: ${depuis}
+ACCÉS
+piste: ${piste}
+temps: ${temps}
+aide: ${aide}
+autres: ${autres}
+com:${commentaires}`;
+
+        // Créer un Blob avec le texte du formulaire
+        var blob = new Blob([content], { type: 'text/plain' });
+
+        // Créer un lien de téléchargement
+        var link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = 'formulaire_prise_alerte.txt';
+
+        // Simuler un clic sur le lien pour télécharger le fichier
+        link.click();
+    }
+
+
+    function uploadFile() {
+        const fileInput = document.getElementById("fileInput");
+        const file = fileInput.files[0];
+
+        if (!file) {
+            alert("Veuillez sélectionner un fichier .txt");
+            return;
+        }
+
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            const content = e.target.result;
+            const data = parseTextFile(content);
+            fillForm(data);
+        };
+        reader.readAsText(file);
+    }
+
+    function parseTextFile(content) {
+        const data = {};
+        const lines = content.split("\n");
+
+        lines.forEach(line => {
+            line = line.trim();
+            if (line.includes(":")) {
+                const parts = line.split(":");
+                const key = parts[0].trim();
+                const value = parts.slice(1).join(":").trim();
+                if (key && value) {
+                    data[key] = value;
+                }
+            }
+        });
+
+        return data;
+    }
+
+    function fillForm(data) {
+        const fields = [
+            "DATE", "HEURE", "PLANTON",
+            "NOM", "PRÉNOM", "TÉLÉPHONE", "QUALITÉ",
+            "TYPE", "RACE", "POIDS", "COMPORTEMENT",
+            "departement", "commune", "latitude", "longitude",
+            "situation", "blessure", "depuis",
+            "piste", "temps", "aide", "autres",
+            "com"
+        ];
+
+        fields.forEach(field => {
+            if (document.getElementById(field) && data[field]) {
+                document.getElementById(field).value = data[field];
+            }
+        });
+    }
+
