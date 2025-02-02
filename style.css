@@ -38,7 +38,7 @@ nav{
     column-gap: 5px;
 }
 
-button {
+nav button {
     cursor: pointer;
     border: none;
     border-radius: 10px;
@@ -50,6 +50,13 @@ button {
 
 }
 
+button {
+    cursor: pointer;
+    border: none;
+    border-radius: 10px;
+    background-color: #F4DC57;
+}
+
 #formu{
     background-color: white;
     min-width: 60%;
@@ -59,6 +66,9 @@ button {
     justify-content: center;
     flex-wrap: wrap;
     column-gap: 20px;
+    overflow: scroll;
+    max-height: 80vh;
+    overflow-x:hidden;
 }
 #info{
     display: flex;
@@ -79,3 +89,6 @@ button {
     grid-template-columns: 50% 50%;
 }
 
+#formuprisealerte{
+    padding : 10px;
+}
