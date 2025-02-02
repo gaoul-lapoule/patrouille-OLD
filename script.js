@@ -37,6 +37,22 @@ function envoyerMessage() {
     let poids = document.getElementById("POIDS").value;
     let comportement = document.getElementById("COMPORTEMENT").value;
 
+    let departement = document.getElementById("departement").value;
+    let commune = document.getElementById("commune").value;
+    let lat = parseFloat(document.getElementById("latitude").value); // Convertit en nombre
+    let long = parseFloat(document.getElementById("longitude").value);
+
+    let situation = document.getElementById("situation").value;
+    let blessure = document.getElementById("blessure").value;
+    let depuis = document.getElementById("depuis").value;
+
+    let piste = document.getElementById("piste").value;
+    let temps = document.getElementById("temps").value;
+    let aide = document.getElementById("aide").value;
+    let autres = document.getElementById("autres").value;
+
+    let com = document.getElementById("com").value;
+
     // Construction du message
     let message = ` ALERTE ESAM %0A`;
     message += ` Date : ${date}%0A`;
@@ -47,13 +63,84 @@ function envoyerMessage() {
     
     message += ` Animal : ${type} - ${race}%0A`;
     message += ` Poids : ${poids} kg%0A`;
-    message += ` Comportement : ${comportement}%0A`;
-    message += ` Envoyé avec Pat'rouille%0A`;
+    message += ` Comportement : ${comportement}%0A%0A`;
+
+    message += ` Département : ${departement}%0A`;
+    message += ` Commune : ${commune}%0A`;
+    message += ` Coordonnées : ${lat}, ${long} %0A%0A`;
+
+    message += ` Description :%0A`;
+    message += ` ${situation}%0A%0A`;
+    message += ` Blessures : ${blessure}%0A`;
+    message += ` Depuis : ${depuis}%0A%0A`;
+
+    message += ` Accés :%0A`;
+    message += ` Pistes Pick-up : ${piste}%0A`;
+    message += ` Temps de marche : ${temps}%0A`;
+    message += ` Aides : ${aide}%0A`;
+    message += ` Autres : ${autres}%0A%0A`;
+
+    message += ` Commentaires :%0A`;
+    message += ` ${com}%0A%0A`;    
+
+    message += ` Pat'rouille | Beta 1.0`;
+    
+
 
     // Générer le lien Messenger
-    let messengerUrl = `https://www.messenger.com/t/4257757770900949?text=${message}`;
+    let messengerUrl = `https://www.messenger.com/e2ee/t/25540215708903119?text=${message}`;
 
     // Ouvrir Messenger dans un nouvel onglet
     window.open(messengerUrl, "_blank");
 }
 
+
+document.addEventListener("DOMContentLoaded", function () {
+    // Charger les départements
+    fetch("https://geo.api.gouv.fr/departements")
+        .then(response => response.json())
+        .then(data => {
+            let datalist = document.getElementById("departements");
+
+            data.forEach(departement => {
+                let option = document.createElement("option");
+                option.value = `${departement.code} - ${departement.nom}`;
+                datalist.appendChild(option);
+            });
+        })
+        .catch(error => console.error("Erreur API Départements :", error));
+});
+
+function loadCommunes() {
+    // Récupérer le code du département sélectionné
+    let departementInput = document.getElementById("departement");
+    let departementCode = departementInput.value.split(' ')[0]; // Le code du département est avant le tiret
+
+    // Vérifier si un code de département est sélectionné
+    if (departementCode) {
+        fetch(`https://geo.api.gouv.fr/departements/${departementCode}/communes`)
+            .then(response => response.json())
+            .then(data => {
+                let datalist = document.getElementById("communes");
+                datalist.innerHTML = ""; // Effacer les anciennes communes
+
+                // Vérifier si des communes sont retournées
+                if (data && data.length > 0) {
+                    data.forEach(commune => {
+                        let option = document.createElement("option");
+                        option.value = commune.nom;
+                        datalist.appendChild(option);
+                    });
+                } else {
+                    let option = document.createElement("option");
+                    option.value = "Aucune commune trouvée";
+                    datalist.appendChild(option);
+                }
+            })
+            .catch(error => console.error("Erreur API Communes :", error));
+    } else {
+        // Si aucun département n'est sélectionné, vider les communes
+        let datalist = document.getElementById("communes");
+        datalist.innerHTML = "";
+    }
+}
