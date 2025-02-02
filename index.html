@@ -16,7 +16,7 @@
     <body>
         <header>
             <img src="src/logo.png" style="height: 40px; padding-top: 5px"> 
-            <h1 class="titreh" style="padding-top: 5px; padding-left: 15px">ESAM | Pat'rouille | Beta 1.0</h1>
+            <h1 class="titreh" style="padding-top: 5px; padding-left: 15px">ESAM | Pat'rouille | Beta 1.1</h1>
         </header>
         <div class="conteneur">
             <!--Boites-->
@@ -135,6 +135,9 @@
                         <br>
                         <br>
                         <button type="button" onclick="envoyerMessage()">Envoyer</button>
+                        <button type="button" onclick="download()">Télécharger</button>
+                        <input type="file" id="fileInput" accept=".txt">
+                        <button type="button" onclick="uploadFile()">Charger le fichier</button>
                     </form>
                 </div>
                 <div id="save" style="display: none;"></div>
@@ -148,4 +151,3 @@
         </div>
     </body>
 </html>
-
