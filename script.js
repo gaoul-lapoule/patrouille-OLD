@@ -50,7 +50,7 @@ function envoyerMessage() {
     message += ` Comportement : ${comportement}%0A`;
 
     // Générer le lien Messenger
-    let messengerUrl = `https://www.messenger.com/e2ee/t/25540215708903119?text=${message}`;
+    let messengerUrl = `https://www.messenger.com/t/4257757770900949?text=${message}`;
 
     // Ouvrir Messenger dans un nouvel onglet
     window.open(messengerUrl, "_blank");
