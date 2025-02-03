@@ -39,6 +39,7 @@ function envoyerMessage() {
 
     let departement = document.getElementById("departement").value;
     let commune = document.getElementById("commune").value;
+    let lieuxdi = document.getElementById("lieuxdi").value;
     let lat = parseFloat(document.getElementById("latitude").value); // Convertit en nombre
     let long = parseFloat(document.getElementById("longitude").value);
 
@@ -66,7 +67,7 @@ function envoyerMessage() {
     message += ` Comportement : ${comportement}%0A%0A`;
 
     message += ` Département : ${departement}%0A`;
-    message += ` Commune : ${commune}%0A`;
+    message += ` Commune : ${commune} - ${lieuxdi}%0A`;
     message += ` Coordonnées : ${lat}, ${long} %0A%0A`;
 
     message += ` Description :%0A`;
@@ -83,12 +84,12 @@ function envoyerMessage() {
     message += ` Commentaires :%0A`;
     message += ` ${com}%0A%0A`;    
 
-    message += ` Pat'rouille | Alpha 1.1`;
+    message += ` Pat'rouille | Beta 1.1`;
     
 
 
     // Générer le lien Messenger
-    let messengerUrl = `https://www.messenger.com/t/4257757770900949?text=${message}`;
+    let messengerUrl = `https://www.messenger.com/e2ee/t/25540215708903119?text=${message}`;
 
     // Ouvrir Messenger dans un nouvel onglet
     window.open(messengerUrl, "_blank");
@@ -189,6 +190,7 @@ COMPORTEMENT: ${comportement}
 LIEUX
 departement: ${departement}
 commune: ${commune}
+lieudi : ${lieuxdi}
 latitude: ${latitude}
 longitude: ${longitude}
 DESCRIPTION
@@ -257,7 +259,7 @@ com:${commentaires}`;
             "DATE", "HEURE", "PLANTON",
             "NOM", "PRÉNOM", "TÉLÉPHONE", "QUALITÉ",
             "TYPE", "RACE", "POIDS", "COMPORTEMENT",
-            "departement", "commune", "latitude", "longitude",
+            "departement", "commune", "lieudi", "latitude", "longitude",
             "situation", "blessure", "depuis",
             "piste", "temps", "aide", "autres",
             "com"
