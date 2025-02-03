@@ -84,7 +84,7 @@ function envoyerMessage() {
     message += ` Commentaires :%0A`;
     message += ` ${com}%0A%0A`;    
 
-    message += ` Pat'rouille | Beta 1.1`;
+    message += ` Pat'rouille | Alpha 1.2`;
     
 
 
