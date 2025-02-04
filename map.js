@@ -28,6 +28,9 @@ var map = Gp.Map.load(
           "mouseposition" : {},
       
       },
+      mapEventsOptions: {
+                "mapLoaded": afterInitMap
+      },
       
 	}) ;
 
