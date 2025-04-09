@@ -26,8 +26,8 @@ var map = Gp.Map.load(
       mapEventsOptions: {
                 "mapLoaded": afterInitMap
       },
-      
-	}) ;
+    }    
+) ;
 
     function afterInitMap() {
         console.log("Carte chargée");
