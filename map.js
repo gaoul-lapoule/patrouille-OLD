@@ -1,9 +1,6 @@
 var map = Gp.Map.load(
-    "divMap",   // identifiant du conteneur HTML
-    // options d'affichage de la carte (Gp.MapOptions)
-    {           
-        
-         apiKey: "ign_scan_ws",
+    "divMap",{
+        apiKey: "ign_scan_ws",
         center: {
             location: "Grenoble"
         },
@@ -13,16 +10,14 @@ var map = Gp.Map.load(
             "SCAN100_PYR-JPEG_WLD_WM": {},
             "SCAN25TOUR_PYR-JPEG_WLD_WM": {},
         },
-      // additional tools to display on the map
-      controlsOptions : {
-          "layerSwitcher" : {},
-          "search" : {},
-          "drawing" : {},
-          "graphicscale" : {},
-          "layerimort" : {},
-          "mouseposition" : {},
-      
-      },
+        controlsOptions: {
+            "layerSwitcher": {},
+            "search": {},
+            "drawing": {},
+            "graphicscale": {},
+            "layerimport": {},
+            "mouseposition": {}
+        }
       mapEventsOptions: {
                 "mapLoaded": afterInitMap
       },
