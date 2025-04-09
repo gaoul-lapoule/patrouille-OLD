@@ -3,7 +3,8 @@ var map = Gp.Map.load(
     // options d'affichage de la carte (Gp.MapOptions)
     {           
         
-         // centrage de la carte
+         apiKey : "UaZsL5eub9xoaAqgXVqUG9GwIAo3O31K",
+	    // centrage de la carte
          center : {
              location : "Grenoble"
          },
@@ -13,6 +14,7 @@ var map = Gp.Map.load(
          layersOptions : {
             "ORTHOIMAGERY.ORTHOPHOTOS" : {},
             "TRANSPORTS.DRONES.RESTRICTIONS" : {},
+	    "GEOGRAPHICALGRIDSYSTEMS.MAPS.SCAN-OACI"{},
             "GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2" : {
         
               opacity : 1
