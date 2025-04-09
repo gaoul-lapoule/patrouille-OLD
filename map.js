@@ -3,23 +3,16 @@ var map = Gp.Map.load(
     // options d'affichage de la carte (Gp.MapOptions)
     {           
         
-         apiKey : "UaZsL5eub9xoaAqgXVqUG9GwIAo3O31K",
-	    // centrage de la carte
-         center : {
-             location : "Grenoble"
-         },
-         // niveau de zoom de la carte (de 1 à 21)
-         zoom : 10,
-         // Couches à afficher
-         layersOptions : {
-            "ORTHOIMAGERY.ORTHOPHOTOS" : {},
-            "TRANSPORTS.DRONES.RESTRICTIONS" : {},
-	    "GEOGRAPHICALGRIDSYSTEMS.MAPS.SCAN-OACI"{},
-            "GEOGRAPHICALGRIDSYSTEMS.PLANIGNV2" : {
-        
-              opacity : 1
-          }
-      },
+         apiKey: "ign_scan_ws",
+        center: {
+            location: "Grenoble"
+        },
+        zoom: 10,
+        layersOptions: {
+            "GEOGRAPHICALGRIDSYSTEMS.MAPS": {},
+            "SCAN100_PYR-JPEG_WLD_WM": {},
+            "SCAN25TOUR_PYR-JPEG_WLD_WM": {},
+        },
       // additional tools to display on the map
       controlsOptions : {
           "layerSwitcher" : {},
