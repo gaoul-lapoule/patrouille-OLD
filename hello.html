@@ -1,0 +1,26 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+  <meta charset="UTF-8">
+  <title>Notification Test</title>
+</head>
+<body>
+  <button onclick="notifyMe()">Tester la notif</button>
+
+  <script>
+    function notifyMe() {
+      if (!("Notification" in window)) {
+        alert("Ce navigateur ne prend pas en charge la notification de bureau");
+      } else if (Notification.permission === "granted") {
+        new Notification("Salut toi !");
+      } else if (Notification.permission !== "denied") {
+        Notification.requestPermission().then((permission) => {
+          if (permission === "granted") {
+            new Notification("Salut toi !");
+          }
+        });
+      }
+    }
+  </script>
+</body>
+</html>
