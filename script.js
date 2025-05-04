@@ -271,16 +271,6 @@ com:${commentaires}`;
             }
         });
     }
- window.onload = function() {
-    alert("🚀 Pat'Rouille Alpha 1.2 – Une prise d’alerte encore plus précise et intuitive !\n\n" +
-          "🔥 Nouveautés de la version Alpha 1.2 :\n" +
-          "✅ Correction des coordonnées sur la carte :\n" +
-          "✅ Cliquez sur la carte pour entrer des coordonnées\n" +
-          "✅ Ajout des formulaires « lieux dits »\n\n" +
-          "🐾 Pat'Rouille 🚨");
-  };
-
-
 
 
 function notifyMe() {
