@@ -1,7 +1,7 @@
 
 
 // 🌍 Crée la carte
-var map = L.map('carte', {
+var map = L.map('mapDiv', {
   center: [45.214659,5.846747],
   zoom: 12,
   fullscreenControl: true, // ⬅️ Ajout du bouton plein écran
