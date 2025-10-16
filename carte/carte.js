@@ -157,7 +157,7 @@ document.addEventListener("DOMContentLoaded", function () {
 //center cordonée
 function centercordonnee() {
     // Récupérer la valeur de l'input (les coordonnées sous forme de "latitude, longitude")
-    const coordInput = document.querySelector('#alerte_cord').value;
+    const coordInput = document.getElementById("cordonée").value;
 
     // Vérifier que l'input n'est pas vide
     if (coordInput) {
