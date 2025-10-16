@@ -73,8 +73,8 @@ map.pm.addControls({
 
 document.addEventListener("DOMContentLoaded", function () {
 
-    const depInput = document.querySelector('input[name$="alerte[dep]"]');
-    const communeInput = document.querySelector('input[name$="alerte[commune]"]');
+    const depInput = document.getElementById("departement");
+    const communeInput = document.getElementById("commune");
 
     function getDepCode() {
         const depValue = depInput.value; // Exemple "75 - Paris"
