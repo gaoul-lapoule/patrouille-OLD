@@ -8,8 +8,18 @@
         <script type="text/javascript" src="script.js"></script>
 
         <!-- SDK web Géoplateforme-->
-        <script src="GpSDK-2D-3.5.4/GpSDK2D.js"></script>
-        <link rel="stylesheet" href="GpSDK-2D-3.5.4/GpSDK2D.css" />
+        <link rel="stylesheet" href="carte/leaflet/leaflet.css">
+            <link rel="stylesheet" href="{{ asset('src/module/carte/leaflet/GpPluginLeaflet-2.4.2/GpPluginLeaflet.css') }}">
+            <!-- Leaflet.draw CSS -->
+            <link rel="stylesheet" href="{{ asset('src/module/carte/leaflet/geoman-drw/leaflet-geoman.css') }}"/>
+        
+            <link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/leaflet.fullscreen.css' rel='stylesheet' />
+
+        <script src="carte/leaflet/leaflet.js></script>
+    <script  src="carte/leaflet/GpPluginLeaflet-2.4.2/GpPluginLeaflet.js" data-key="cartes,essentiels,ign_scan_ws,transports"></script>
+    <script src="carte/leaflet/geoman-drw/leaflet-geoman.js"></script>
+
+     <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/Leaflet.fullscreen.min.js'></script>
     </head>
 
 
@@ -151,7 +161,7 @@
             </div>
 
             <div class="box" id="divMap"> 
-            <script src="map.js"></script>
+             <script src="carte/carte.js"></script>
             </div>
         </div>
     </body>
