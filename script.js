@@ -75,14 +75,12 @@ document.addEventListener("DOMContentLoaded", function () {
 
     const depInput = document.querySelector('#dep');
     const communeInput = document.querySelector('#commune');
-    const coordInput = document.querySelector('#cord');
 
     if (!depInput || !communeInput) return; // sécurité
 
     function getDepCode() {
-        const depValue = depInput.value.trim(); // ex: "38 - Isère"
-        if (!depValue.includes('-')) return depValue.slice(0, 2);
-        return depValue.split('-')[0].trim();
+        const depValue = depInput.value; // Exemple "75 - Paris"
+        return depValue.split(" - ")[0].trim();
     }
 
     communeInput.addEventListener("change", function () {
@@ -90,47 +88,31 @@ document.addEventListener("DOMContentLoaded", function () {
         if (!communeName) return;
 
         const depCode = getDepCode();
-        if (!depCode) {
-            alert("Veuillez d'abord sélectionner un département.");
-            return;
-        }
+        if (!depCode) return alert("Veuillez sélectionner un département.");
 
-        // Appel API Géo pour récupérer les coordonnées
         fetch(`https://geo.api.gouv.fr/communes?nom=${encodeURIComponent(communeName)}&fields=nom,code,centre,departement`)
             .then(res => res.json())
             .then(communes => {
-                // Filtrer par département + nom exact (insensible à la casse)
+
                 const filteredCommunes = communes.filter(commune => {
-                    const depCodeStart = commune.departement?.code || commune.code.slice(0, 2);
-                    return depCodeStart === depCode && commune.nom.toLowerCase() === communeName.toLowerCase();
+                    const depCodeStart = commune.departement?.code || commune.code;
+                    return depCodeStart.startsWith(depCode) && commune.nom.toLowerCase() === communeName.toLowerCase();
                 });
 
                 if (filteredCommunes.length === 1) {
                     const commune = filteredCommunes[0];
                     const [lng, lat] = commune.centre.coordinates;
-
-                    // Centrer la carte
-                    if (typeof map !== 'undefined' && map) {
-                        map.setView([lat, lng], 13);
-                    }
-
-                    // Mettre à jour le champ de coordonnées
-                    if (coordInput) {
-                        coordInput.value = `${lat.toFixed(5)}, ${lng.toFixed(5)}`;
-                    }
-
+                    map.setView([lat, lng], 14);
                 } else if (filteredCommunes.length > 1) {
-                    alert("Plusieurs communes correspondent. Veuillez préciser le nom complet.");
+                    alert("Plusieurs communes correspondent, veuillez préciser le nom complet.");
                 } else {
-                    alert("Aucune commune trouvée avec ce nom exact dans le département sélectionné.");
+                    alert("Aucune commune trouvée dans le département sélectionné.");
                 }
             })
-            .catch(err => {
-                console.error("Erreur lors du géocodage :", err);
-                alert("Erreur lors de la récupération des coordonnées.");
-            });
+            .catch(err => console.error("Erreur de géocodage :", err));
     });
 });
+
 
 
 
@@ -169,59 +151,23 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     }
 
+
+  
     // Fonction pour centrer la carte sur les coordonnées saisies
-    window.centercordonnee = function () {
-        if (typeof map === 'undefined' || !map) return;
+    function centercordonnee() {
+    const coordInput = document.querySelector('#cord');
+    if (!coordInput || !coordInput.value) return alert("Veuillez entrer des coordonnées (lat, lng).");
 
-        const value = coordInput.value.trim();
-        if (!value) return alert("Veuillez entrer des coordonnées (lat, lng).");
-
-        const parts = value.split(',').map(v => parseFloat(v));
-        if (parts.length !== 2 || parts.some(isNaN)) {
-            alert("Format invalide. Exemple : 45.12345, 5.67890");
-            return;
-        }
-
-        const [lat, lng] = parts;
-        map.setView([lat, lng], 14); // zoom par défaut
-    };
-});
-
-
-
-
-
-
-//center cordonée
-function centercordonnee() {
-    // Récupérer la valeur de l'input (les coordonnées sous forme de "latitude, longitude")
-    const coordInput = document.querySelector('cord').value;
-
-    // Vérifier que l'input n'est pas vide
-    if (coordInput) {
-        // Séparer la chaîne "latitude, longitude" en deux valeurs
-        const coords = coordInput.split(',');
-
-        // Vérifier que la chaîne est correctement séparée en latitude et longitude
-        if (coords.length === 2) {
-            const lat = parseFloat(coords[0].trim()); // Latitude
-            const lng = parseFloat(coords[1].trim()); // Longitude
-
-            // Vérifier que les valeurs sont valides
-            if (!isNaN(lat) && !isNaN(lng)) {
-                // Recentrer la carte sur les nouvelles coordonnées
-                map.setView([lat, lng], 14); // Vous pouvez ajuster le zoom ici
-                L.marker([lat,lng],).addTo(map)
-            } else {
-                console.error("Les coordonnées sont invalides.");
-            }
-        } else {
-            console.error("Le format des coordonnées est incorrect. Utilisez 'latitude, longitude'.");
-        }
-    } else {
-        console.error("L'input est vide. Veuillez entrer des coordonnées.");
+    const parts = coordInput.value.split(',').map(v => parseFloat(v.trim()));
+    if (parts.length !== 2 || parts.some(isNaN)) {
+        return alert("Format invalide. Exemple : 45.12345, 5.67890");
     }
+
+    const [lat, lng] = parts;
+    map.setView([lat, lng], 14);
+    L.marker([lat, lng]).addTo(map);
 }
+
 
 
 
@@ -717,7 +663,7 @@ function fillForm(data) {
 }
 
 
-function envoyerMessage() {
+function sendMessenger() {
     // Récupération des valeurs du formulaire
     const requerant = document.getElementById("requerant").value;
     const tel = document.getElementById("tel").value;
