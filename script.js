@@ -163,7 +163,7 @@ function sendMessenger() {
     message += `Marche : ${marche}%0A`;
     message += `Aide : ${aide}%0A`;
     message += `Pick-up : ${pickup}%0A%0A`;
-    message += `Pat'rouille | Alpha 1.2`;
+    message += `Pat'rouille-OLD | Alpha 1.2-tempo`;
 
     // Générer le lien Messenger et ouvrir dans un nouvel onglet
     const messengerUrl = `https://www.messenger.com/t/4257757770900949?text=${message}`;
