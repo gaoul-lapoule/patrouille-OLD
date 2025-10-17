@@ -1,7 +1,7 @@
 
 
 // 🌍 Crée la carte
-var map = L.map('carte', {
+var map = L.map('map', {
   center: [45.214659,5.846747],
   zoom: 12,
   fullscreenControl: true, // ⬅️ Ajout du bouton plein écran
@@ -73,8 +73,8 @@ map.pm.addControls({
 
 document.addEventListener("DOMContentLoaded", function () {
 
-    const depInput = document.querySelector('input[name$="alerte[dep]"]');
-    const communeInput = document.querySelector('input[name$="alerte[commune]"]');
+    const depInput = document.querySelector('input[name$="dep"]');
+    const communeInput = document.querySelector('input[name$="commune"]');
 
     function getDepCode() {
         const depValue = depInput.value; // Exemple "75 - Paris"
@@ -157,7 +157,7 @@ document.addEventListener("DOMContentLoaded", function () {
 //center cordonée
 function centercordonnee() {
     // Récupérer la valeur de l'input (les coordonnées sous forme de "latitude, longitude")
-    const coordInput = document.querySelector('#alerte_cord').value;
+    const coordInput = document.querySelector('cord').value;
 
     // Vérifier que l'input n'est pas vide
     if (coordInput) {
