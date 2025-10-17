@@ -73,12 +73,16 @@ map.pm.addControls({
 
 document.addEventListener("DOMContentLoaded", function () {
 
-    const depInput = document.querySelector('input[name$="dep"]');
-    const communeInput = document.querySelector('input[name$="commune"]');
+    const depInput = document.querySelector('#dep');
+    const communeInput = document.querySelector('#commune');
+    const coordInput = document.querySelector('#cord');
+
+    if (!depInput || !communeInput) return; // sécurité
 
     function getDepCode() {
-        const depValue = depInput.value; // Exemple "75 - Paris"
-        return depValue.split(" - ")[0].trim(); // Récupère le code du département
+        const depValue = depInput.value.trim(); // ex: "38 - Isère"
+        if (!depValue.includes('-')) return depValue.slice(0, 2);
+        return depValue.split('-')[0].trim();
     }
 
     communeInput.addEventListener("change", function () {
@@ -86,15 +90,18 @@ document.addEventListener("DOMContentLoaded", function () {
         if (!communeName) return;
 
         const depCode = getDepCode();
+        if (!depCode) {
+            alert("Veuillez d'abord sélectionner un département.");
+            return;
+        }
 
-        // Géocodage pour récupérer les coordonnées GPS
-        fetch(`https://geo.api.gouv.fr/communes?nom=${communeName}&fields=nom,code,centre`)
+        // Appel API Géo pour récupérer les coordonnées
+        fetch(`https://geo.api.gouv.fr/communes?nom=${encodeURIComponent(communeName)}&fields=nom,code,centre,departement`)
             .then(res => res.json())
             .then(communes => {
-                
-                // Filtrer communes par département ET nom exact (case-insensitive)
+                // Filtrer par département + nom exact (insensible à la casse)
                 const filteredCommunes = communes.filter(commune => {
-                    const depCodeStart = commune.code.slice(0, 2);
+                    const depCodeStart = commune.departement?.code || commune.code.slice(0, 2);
                     return depCodeStart === depCode && commune.nom.toLowerCase() === communeName.toLowerCase();
                 });
 
@@ -102,53 +109,84 @@ document.addEventListener("DOMContentLoaded", function () {
                     const commune = filteredCommunes[0];
                     const [lng, lat] = commune.centre.coordinates;
 
-                    map.setView([lat, lng], 14); // Recentrer la carte
+                    // Centrer la carte
+                    if (typeof map !== 'undefined' && map) {
+                        map.setView([lat, lng], 13);
+                    }
+
+                    // Mettre à jour le champ de coordonnées
+                    if (coordInput) {
+                        coordInput.value = `${lat.toFixed(5)}, ${lng.toFixed(5)}`;
+                    }
+
                 } else if (filteredCommunes.length > 1) {
-                    alert("Plusieurs communes correspondent, veuillez affiner la sélection.");
+                    alert("Plusieurs communes correspondent. Veuillez préciser le nom complet.");
                 } else {
                     alert("Aucune commune trouvée avec ce nom exact dans le département sélectionné.");
                 }
             })
-            .catch(err => console.error(err));
+            .catch(err => {
+                console.error("Erreur lors du géocodage :", err);
+                alert("Erreur lors de la récupération des coordonnées.");
+            });
     });
 });
 
 
 
+
 document.addEventListener("DOMContentLoaded", function () {
-    const coordInput = document.querySelector('#alerte_cord');
+    const coordInput = document.querySelector('#cord');
     let isCoordInputFocused = false;
     let blurTimeout = null;
 
+    if (!coordInput) return; // sécurité : si l'élément n'existe pas
+
     coordInput.addEventListener('focus', () => {
-        // Si un timeout était en cours (blur), on l'annule
         if (blurTimeout) {
             clearTimeout(blurTimeout);
             blurTimeout = null;
         }
-
         isCoordInputFocused = true;
     });
 
     coordInput.addEventListener('blur', () => {
-        // Attendre 1 seconde avant de mettre isCoordInputFocused à false
         blurTimeout = setTimeout(() => {
             isCoordInputFocused = false;
             blurTimeout = null;
         }, 1000);
     });
 
-    map.on('click', function(e) {
-        
-        if (!isCoordInputFocused) return;
+    // Gestion du clic sur la carte
+    if (typeof map !== 'undefined' && map) {
+        map.on('click', function (e) {
+            if (!isCoordInputFocused) return;
 
-        const lat = e.latlng.lat.toFixed(5);
-        const lng = e.latlng.lng.toFixed(5);
+            const lat = e.latlng.lat.toFixed(5);
+            const lng = e.latlng.lng.toFixed(5);
 
-        coordInput.value = `${lat}, ${lng}`;
+            coordInput.value = `${lat}, ${lng}`;
+        });
+    }
 
-    });
+    // Fonction pour centrer la carte sur les coordonnées saisies
+    window.centercordonnee = function () {
+        if (typeof map === 'undefined' || !map) return;
+
+        const value = coordInput.value.trim();
+        if (!value) return alert("Veuillez entrer des coordonnées (lat, lng).");
+
+        const parts = value.split(',').map(v => parseFloat(v));
+        if (parts.length !== 2 || parts.some(isNaN)) {
+            alert("Format invalide. Exemple : 45.12345, 5.67890");
+            return;
+        }
+
+        const [lat, lng] = parts;
+        map.setView([lat, lng], 14); // zoom par défaut
+    };
 });
+
 
 
 
