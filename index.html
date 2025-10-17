@@ -1,166 +1,122 @@
 <!DOCTYPE html>
 <html lang="fr">
-    <head>
-        <meta charset="utf-8">
-        <title>Pat'rouille - ESAM</title>
-        <link href="style.css" rel="stylesheet">
-        <link rel="icon" type="image/png" href="src/logo.png" />
-        <script type="text/javascript" src="script.js"></script>
+<head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width,initial-scale=1" />
+    <title>Pat'rouille - ESAM OLD</title>
+    <link rel="icon" type="image/png" href="src/logo.png" />
 
-        <!-- SDK web Géoplateforme-->
-        <link rel="stylesheet" href="carte/leaflet/leaflet.css">
-            <link rel="stylesheet" href="carte/leaflet/GpPluginLeaflet-2.4.2/GpPluginLeaflet.css">
-            <!-- Leaflet.draw CSS -->
-            <link rel="stylesheet" href="carte/leaflet/geoman-drw/leaflet-geoman.css"/>
-        
-            <link href='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/leaflet.fullscreen.css' rel='stylesheet' />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    <link rel="stylesheet" href="https://unpkg.com/leaflet-geoman-free@2.15.0/dist/leaflet-geoman.css" />
+    <link rel="stylesheet" href="style.css" />
 
-        <script src="carte/leaflet/leaflet.js></script>
-    <script  src="carte/leaflet/GpPluginLeaflet-2.4.2/GpPluginLeaflet.js" data-key="cartes,essentiels,ign_scan_ws,transports"></script>
-    <script src="carte/leaflet/geoman-drw/leaflet-geoman.js"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+    <script src="https://unpkg.com/leaflet-geoman-free@2.15.0/dist/leaflet-geoman.min.js"></script>
+</head>
+<body>
+<header>
+    <img src="src/logo.png" alt="logo" id="logo">
+    <h1>ESAM | Pat'rouille — Refonte</h1>
+</header>
 
-     <script src='https://api.mapbox.com/mapbox.js/plugins/leaflet-fullscreen/v1.0.1/Leaflet.fullscreen.min.js'></script>
-    </head>
+<main class="conteneur">
+    <section class="left-panel">
+        <form id="alerteForm" name="alerte">
+            <h2>PRISE D'ALERTE</h2>
 
+            <fieldset class="card">
+                <legend>APPELANT</legend>
+                <label>Requérant<input name="requerant" id="requerant" type="text"></label>
+                <label>Téléphone<input name="tel" id="tel" type="tel"></label>
+                <label>Qualité<input name="qualite" id="qualite" type="text"></label>
+            </fieldset>
 
-    <body>
-        <header>
-            <img src="src/logo.png" style="height: 40px; padding-top: 5px"> 
-            <h1 class="titreh" style="padding-top: 5px; padding-left: 15px">ESAM | Pat'rouille | Alpha 1.2</h1>
+            <fieldset class="card">
+                <legend>ANIMAL</legend>
+                <label>Type<input name="type" id="type"></label>
+                <label>Race<input name="race" id="race"></label>
+                <label>Poids (kg)<input name="poids" id="poids" type="number" min="0"></label>
+            </fieldset>
 
-        </header>
-        <div class="conteneur">
-            <!--Boites-->
-            <div class="box" id="sidebar">
-                <!--Bloc outils-->
-                <nav>
-                    <!--Boutton de nav-->
-                    <button class="toggle-btn" data-target="formu"><img src="src/new.png" style="height: 30px;padding-top: 10px;"></button>
-                    <button class="toggle-btn" data-target="chat"><img src="src/chat.png" style="height: 30px;padding-top: 10px;"></button>
-                    <button class="toggle-btn" data-target="save"><img src="src/save.png" style="height: 30px;padding-top: 10px;"></button>
-                </nav>
-                <div id="formu" style="display: none;">
-                    <form method="get" action="" id="formuprisealerte">
-                        <h2 style="text-align: center;">PRISE D'ALERTE</h2>
-                        <br>
-                        <br>
-                        <p id="info">
-                            <label for="date">DATE</label>
-                            <input type="date" name="DATE" id="DATE">
+            <fieldset class="card">
+                <legend>LIEUX</legend>
+                <label>Département<input id="dep" name="dep" list="dep_list" placeholder="ex: 38 - Isère"></label>
+                <datalist id="dep_list"></datalist>
 
-                            <label for="HEURE">HEURE</label>
-                            <input type="time" name="HEURE" id="HEURE">
+                <label>Commune<input id="commune" name="commune" list="comm_list" placeholder="Saisir la commune"></label>
+                <datalist id="comm_list"></datalist>
 
-                            <label for="PLANTON">PLANTON</label>
-                            <input type="text" name="PLANTON" id="PLANTON">
-                        </p>
-                        <br>
-                        <div id="b1">
-                            <div id="b11">
-                                <h2>APPELANT</h2>
-                                <p id="appelant">
-                                    <label for="nom">NOM</label>
-                                    <input type="text" name="NOM" id="NOM"><br>
-                                    <label for="PRÉNOM">PRÉNOM</label>
-                                    <input type="text" name="PRÉNOM" id="PRÉNOM"><br>
-                                    <label for="TÉLÉPHONE">TÉLÉPHONE</label>
-                                    <input type="tel" name="TÉLÉPHONE" id="TÉLÉPHONE"><br>
-                                    <label for="QUALITÉE">QUALITÉE</label>
-                                    <select name="Chosir">
-                                                <option value="Proprietaire">Propriétaire</option>
-                                                <option value="Témoins">Témoins</option>
-                                                <option value="Institution">Institution</option>
-                                    </select><br>
-                                </p>
-                            </div>
-                            <div id="b12">
-                                <h2>ANIMAL</h2>
-                                <p id="appelant">
-                                    <label for="type">TYPE</label>
-                                    <input type="text" name="TYPE" id="TYPE"><br>
+                <label>Lieu-dit<input id="lieux" name="lieux"></label>
 
-                                    <label for="RACE">RACE</label>
-                                    <input type="text" name="RACE" id="RACE" ><br>
+                <label>Coordonnées (DD)<input id="cord" name="cord" placeholder="lat, lng"></label>
+                <button type="button" class="small-btn" onclick="centercordonnee()" title="Centrer sur les coordonnées"><i>📍</i></button>
+            </fieldset>
 
-                                    <label for="POIDS">POIDS</label>
-                                    <input type="number" name="POIDS" id="POIDS"><br>
-
-                                    <label for="COMPORTEMENT">COMPORTEMENT</label>
-                                    <input type="text" name="COMPORTEMENT" id="COMPORTEMENT">
-                                </p>
-                            </div>
-                        </div>
-                        <br>
-                        <h2 style="text-align: center;">LIEUX</h2>
-                        <p id="lieux">
-                            <label for="departement">DEPARTEMENT</label>
-                            <input type="text" id="departement" placeholder="Saisir un département" list="departements" onchange="loadCommunes()"><br>
-                            <datalist id="departements"></datalist>
-
-                            <label for="commune">COMMUNE</label>
-                            <input type="text" id="commune" placeholder="Saisir une commune" list="communes">
-                            <datalist id="communes"></datalist>
-
-                            <label for="lieuxdi">LIEUX-DIT</label>
-                            <input type="text" name="lieuxdi" id="lieuxdi"><br>
-                            
-                            <br>
-                            <label for="latitude">Cordonée :</label>
-                            <input id="cordonée" placeholder="Entrez la latitude" required />
-                            <button type="button"  onclick="coordcenter()" style="border-width: thin;border-style: solid;"><img src="src/pin.png" style="height: 10px;"></button><br>
-
-                        </p>
-                        <br>
-                        <h2 style="text-align: center;">DESCRIPTION</h2>
-                        <p id="description">
-                            <textarea name="situation" id="situation" style="width: 100%; min-height: 150px;"></textarea><br>
-
-                            <label for="blessure">BLESSURE</label>
-                            <textarea type="text" id="blessure" style="width:75%;"></textarea><br>
-
-                            <label for="DEPUIS">DEPUIS</label>
-                            <textarea type="text" id="depuis" style="width:81%;"></textarea><br>
-                        </p>
-                        <br>
-                        <h2 style="text-align: center;">ACCÉS</h2>
-                        <p id="acces">
-                            
-                            <label for="piste">PISTE PICK-UP</label>
-                            <textarea type="text" id="piste" style="width:100%;"></textarea><br>
-
-                            <label for="temps">TEMPS DE MARCHE</label>
-                            <input type="time" name="temps" id="temps"><br>
-
-                            <label for="aide">AIDE LOGISTIQUE</label>
-                            <textarea type="text" id="aide" style="width:100%;"></textarea><br>
-
-                            <br>
-                            <label for="autres">AUTRES</label>
-                            <textarea name="autres" id="autres" style="width: 100%; min-height: 150px;"></textarea><br>
-                        </p>
-                        <br>
-                        <h2 style="text-align: center;">COMMENTAIRES</h2>
-                        <p id="commentaires">
-                            <textarea name="commentaires" id="com" style="width: 100%; min-height: 150px;"></textarea><br>
-                        </p>
-                        <br>
-                        <br>
-                        <br>
-                        <button type="button" onclick="envoyerMessage()">Envoyer</button>
-                        <button type="button" onclick="download()">Télécharger</button>
-                        <input type="file" id="fileInput" accept=".txt">
-                        <button type="button" onclick="uploadFile()">Charger le fichier</button>
-                    </form>
+            <fieldset class="card">
+                <legend>DESCRIPTION</legend>
+                <textarea id="description" name="description" rows="4" placeholder="Description..."></textarea>
+                <div class="row">
+                    <label>Blessure<input id="blessures" name="blessures"></label>
+                    <label>Depuis<input id="depuis" name="depuis"></label>
                 </div>
-                <div id="save" style="display: none;"></div>
+            </fieldset>
 
+            <fieldset class="card">
+                <legend>ACCÈS</legend>
+                <label>Marche<input id="marche" name="marche" type="time"></label>
+                <label>Aide<input id="aide" name="aide"></label>
+                <label>Pick-Up<input id="pickup" name="pickup"></label>
+            </fieldset>
 
+            <fieldset class="card">
+                <legend>COORD CONVERTER</legend>
+                <div id="gps-converter-container">
+                    <h4>DD</h4>
+                    <div class="gps-row"><input id="latDD" type="number" step="0.000001" placeholder="45.123456"><input id="lonDD" type="number" step="0.000001" placeholder="5.123456"></div>
+                    <h4>DMS</h4>
+                    <div class="gps-row small">
+                        <input id="latD" type="number" placeholder="45"><input id="latM" type="number" placeholder="30"><input id="latS" type="number" step="0.01" placeholder="38.25">
+                        <select id="latRef"><option value="N">N</option><option value="S">S</option></select>
+                    </div>
+                    <div class="gps-row small">
+                        <input id="lonD" type="number" placeholder="5"><input id="lonM" type="number" placeholder="45"><input id="lonS" type="number" step="0.01" placeholder="12.00">
+                        <select id="lonRef"><option value="E">E</option><option value="W">W</option></select>
+                    </div>
+                    <h4>DMD</h4>
+                    <div class="gps-row small">
+                        <input id="latDmdD" type="number" placeholder="45"><input id="latDmdM" type="number" step="0.001" placeholder="30.633"><select id="latDmdRef"><option value="N">N</option><option value="S">S</option></select>
+                    </div>
+                    <div class="gps-row small">
+                        <input id="lonDmdD" type="number" placeholder="5"><input id="lonDmdM" type="number" step="0.001" placeholder="45.200"><select id="lonDmdRef"><option value="E">E</option><option value="W">W</option></select>
+                    </div>
+                </div>
+            </fieldset>
+
+            <input type="hidden" id="geojson" name="geojson">
+            <div class="actions">
+                <button type="button" onclick="saveLocal()">Sauvegarder local</button>
+                <button type="button" onclick="loadLocal()">Charger local</button>
+                <button type="button" onclick="downloadTxt()">Télécharger</button>
+                <button type="button" onclick="sendMessenger()">Envoyer Messenger</button>
+                <input type="file" id="fileInput" accept=".txt">
+                <button type="button" onclick="uploadFile()">Charger fichier</button>
             </div>
+        </form>
+    </section>
 
-            <div class="box" id="divMap"> 
-             <script src="carte/carte.js"></script>
-            </div>
+    <section class="right-panel">
+        <div id="map" aria-label="Carte" ></div>
+        <div id="map-controls" class="map-controls">
+            <button id="fullscreenBtn" title="Plein écran">⛶</button>
+            <div id="color-control" class="color-control"></div>
         </div>
-    </body>
-</html>
+    </section>
+</main>
 
+<footer>
+    <small>Refonte — ESAM | Pat'rouille</small>
+</footer>
+
+<script src="script.js"></script>
+</body>
+</html>
