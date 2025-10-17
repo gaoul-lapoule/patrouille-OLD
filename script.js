@@ -717,4 +717,49 @@ function fillForm(data) {
 }
 
 
+function envoyerMessage() {
+    // Récupération des valeurs du formulaire
+    const requerant = document.getElementById("requerant").value;
+    const tel = document.getElementById("tel").value;
+    const qualite = document.getElementById("qualite").value;
+
+    const type = document.getElementById("type").value;
+    const race = document.getElementById("race").value;
+    const poids = document.getElementById("poids").value;
+
+    const departement = document.getElementById("dep").value;
+    const commune = document.getElementById("commune").value;
+    const lieux = document.getElementById("lieux").value;
+    const coord = document.getElementById("cord").value;
+
+    const description = document.getElementById("description").value;
+    const blessures = document.getElementById("blessures").value;
+    const depuis = document.getElementById("depuis").value;
+
+    const marche = document.getElementById("marche").value;
+    const aide = document.getElementById("aide").value;
+    const pickup = document.getElementById("pickup").value;
+
+    // Construction du message (encodé pour URL)
+    let message = `ALERTE ESAM%0A`;
+    message += `Appelant : ${requerant} (%20Tel: ${tel}, Qualité: ${qualite})%0A%0A`;
+    message += `Animal : ${type} - ${race}%0A`;
+    message += `Poids : ${poids} kg%0A%0A`;
+    message += `Lieu : ${departement}, ${commune} - ${lieux}%0A`;
+    message += `Coordonnées : ${coord}%0A%0A`;
+    message += `Description : ${description}%0A`;
+    message += `Blessures : ${blessures}%0A`;
+    message += `Depuis : ${depuis}%0A%0A`;
+    message += `Accès :%0A`;
+    message += `Marche : ${marche}%0A`;
+    message += `Aide : ${aide}%0A`;
+    message += `Pick-up : ${pickup}%0A%0A`;
+    message += `Pat'rouille | Alpha 1.2`;
+
+    // Générer le lien Messenger et ouvrir dans un nouvel onglet
+    const messengerUrl = `https://www.messenger.com/t/4257757770900949?text=${message}`;
+    window.open(messengerUrl, "_blank");
+}
+
+
 
