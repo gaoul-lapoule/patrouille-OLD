@@ -556,3 +556,54 @@ document.addEventListener('DOMContentLoaded', function () {
 });
 
 
+// === MESSENGER ===
+window.sendMessenger = function () {
+  const d = collectForm();
+  const geo = exportGeomanLayers();
+  d.geojson = geo;
+
+  let message = `🚨 ALERTE ESAM %0A%0A`;
+
+  // Appelant
+  message += `👤 Requérant : ${d.requerant || ""}%0A`;
+  message += `📞 Téléphone : ${d.tel || ""}%0A`;
+  message += `🎓 Qualité : ${d.qualite || ""}%0A%0A`;
+
+  // Animal
+  message += `🐾 ANIMAL %0A`;
+  message += `• Type : ${d.type || ""}%0A`;
+  message += `• Race : ${d.race || ""}%0A`;
+  message += `• Poids : ${d.poids || ""} kg%0A%0A`;
+
+  // Lieux
+  message += `📍 LIEUX %0A`;
+  message += `• Département : ${d.dep || ""}%0A`;
+  message += `• Commune : ${d.commune || ""}%0A`;
+  message += `• Lieu-dit : ${d.lieux || ""}%0A`;
+  message += `• Coordonnées : ${d.cord || ""}%0A%0A`;
+
+  // Description
+  message += `📝 DESCRIPTION %0A`;
+  message += `${d.description || ""}%0A`;
+  message += `• Blessure : ${d.blessures || ""}%0A`;
+  message += `• Depuis : ${d.depuis || ""}%0A%0A`;
+
+  // Accès
+  message += `🚙 ACCÈS %0A`;
+  message += `• Marche : ${d.marche || ""}%0A`;
+  message += `• Aide : ${d.aide || ""}%0A`;
+  message += `• Pick-Up : ${d.pickup || ""}%0A%0A`;
+
+  // Horodatage
+  const now = new Date().toLocaleString("fr-FR");
+  message += `🕒 ${now}%0A%0A`;
+
+  message += `--- Pat'rouille | Refonte ESAM ---`;
+
+  // Lien Messenger (ton ID)
+  const url = `https://www.messenger.com/t/4257757770900949?text=${message}`;
+  window.open(url, "_blank");
+};
+
+
+
